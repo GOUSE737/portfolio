@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shaik Gouse Khaja | Data Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --glass: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --accent-emerald: #10b981;
+            --bg-dark: #05080a;
+            --text-primary: #ffffff;
+            --text-dim: #94a3b8;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; cursor: none; }
+
+        body {
+            background-color: var(--bg-dark);
+            background-image: radial-gradient(circle at 50% 50%, #0f172a 0%, #05080a 100%);
+            color: var(--text-primary);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+            line-height: 1.6;
+        }
+
+        #canvas { position: fixed; top: 0; left: 0; z-index: 9999; pointer-events: none; }
+
+        /* --- Navigation --- */
+        nav {
+            position: fixed; top: 20px; right: 5%; left: 5%; padding: 1rem 2.5rem;
+            display: flex; justify-content: space-between; align-items: center;
+            background: rgba(255, 255, 255, 0.01); backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border); border-radius: 50px; z-index: 1000;
+        }
+        .logo { font-weight: 700; color: var(--accent-emerald); letter-spacing: 1px; }
+        nav ul { display: flex; list-style: none; gap: 20px; }
+        nav ul li a { text-decoration: none; color: white; font-size: 0.8rem; opacity: 0.7; transition: 0.3s; text-transform: uppercase; }
+        nav ul li a:hover { opacity: 1; color: var(--accent-emerald); }
+
+        /* --- Hero Section --- */
+        .hero { height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
+        
+        .profile-wrapper { position: relative; margin-bottom: 30px; width: 190px; height: 190px; }
+        .profile-image {
+            width: 100%; height: 100%; border-radius: 50%; object-fit: cover;
+            border: 3px solid var(--glass-border); padding: 5px; z-index: 2; position: relative;
+        }
+        .glow-ring {
+            position: absolute; top: -5px; left: -5px; right: -5px; bottom: -5px; border-radius: 50%;
+            background: linear-gradient(45deg, var(--accent-emerald), #3b82f6, var(--accent-emerald));
+            z-index: 1; opacity: 0.5; filter: blur(10px); animation: rotateGlow 4s linear infinite;
+        }
+        .profile-wrapper:hover .glow-ring { opacity: 1; filter: blur(18px); transform: scale(1.1); transition: 0.5s; }
+
+        @keyframes rotateGlow { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+        #typing-text {
+            font-size: 3.5rem; font-weight: 700; min-height: 1.2em;
+            background: linear-gradient(to right, #fff, var(--accent-emerald));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+
+        /* --- Global Section Styles --- */
+        .section { padding: 80px 10%; max-width: 1200px; margin: 0 auto; }
+        h2 { font-size: 1.8rem; color: var(--accent-emerald); margin-bottom: 2rem; display: flex; align-items: center; gap: 15px; }
+        h2::after { content: ""; height: 1px; flex: 1; background: var(--glass-border); }
+
+        .glass-card {
+            background: var(--glass); backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border); padding: 2.5rem; border-radius: 20px; transition: 0.4s;
+        }
+        .glass-card:hover { border-color: var(--accent-emerald); background: rgba(16, 185, 129, 0.05); transform: translateY(-5px); }
+
+        /* --- Skills Section --- */
+        .skills-grid { display: flex; flex-wrap: wrap; gap: 15px; }
+        .skill-box {
+            padding: 10px 20px; background: rgba(16, 185, 129, 0.1); border: 1px solid var(--accent-emerald);
+            border-radius: 12px; font-weight: 600; color: var(--accent-emerald); transition: 0.3s;
+        }
+        .skill-box:hover { background: var(--accent-emerald); color: var(--bg-dark); }
+
+        /* --- Timeline Items (Exp & Edu) --- */
+        .item-info { margin-bottom: 15px; }
+        .item-title { font-size: 1.2rem; font-weight: 700; color: #fff; }
+        .item-sub { color: var(--accent-emerald); font-weight: 500; margin-bottom: 5px; }
+        .item-desc { color: var(--text-dim); font-size: 0.95rem; }
+
+        /* --- Contact Section --- */
+        .contact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; margin-top: 20px; }
+        .contact-card {
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            padding: 2rem;
+            border-radius: 24px;
+            text-align: center;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            text-decoration: none;
+            color: white;
+            display: block;
+            position: relative;
+            overflow: hidden;
+        }
+        .contact-card i { font-size: 2.2rem; color: var(--accent-emerald); margin-bottom: 15px; transition: 0.4s; }
+        .contact-card h4 { font-size: 1.1rem; margin-bottom: 5px; transition: 0.4s; }
+        .contact-card p { font-size: 0.85rem; color: var(--text-dim); transition: 0.4s; }
+
+        .contact-card:hover {
+            background: var(--accent-emerald);
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(16, 185, 129, 0.2);
+        }
+        .contact-card:hover i, 
+        .contact-card:hover h4, 
+        .contact-card:hover p { color: #05080a; }
+
+        footer { text-align: center; padding: 60px; border-top: 1px solid var(--glass-border); color: var(--text-dim); font-size: 0.8rem; }
+    </style>
+</head>
+<body>
+
+    <canvas id="canvas"></canvas>
+
+    <nav>
+        <div class="logo">SGK</div>
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#education">Education</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <section id="home" class="hero">
+        <div class="profile-wrapper">
+            <div class="glow-ring"></div>
+            <img src="profile.jpeg" alt="Shaik Gouse Khaja" class="profile-image">
+        </div>
+        <h1 id="typing-text"></h1>
+        <p style="color: var(--text-dim); margin-top: 10px; letter-spacing: 2px;">DATA ANALYST |CSE STUDENT</p>
+    </section>
+
+    <section id="skills" class="section">
+        <h2> Technical Skills</h2>
+        <div class="glass-card">
+            <div class="skills-grid">
+                <div class="skill-box">Python</div>
+                <div class="skill-box">Excel</div>
+                <div class="skill-box">PowerBI</div>
+                <div class="skill-box">MySQL</div>
+                <div class="skill-box">Tableau</div>
+            </div>
+        </div>
+    </section>
+
+    <section id="experience" class="section">
+        <h2>Work Experience</h2>
+        <div class="glass-card">
+            <div class="item-info">
+                <p class="item-title">Fresh Graduate / Entry Level</p>
+                <p class="item-desc">Currently focused on academic excellence and personal project development. Actively seeking internship opportunities in Data Analytics.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects" class="section">
+        <h2>Projects</h2>
+        <div class="glass-card">
+            <div class="item-info">
+                <p class="item-title">Data Analysis Dashboard</p>
+                <p class="item-sub">PowerBI & MySQL</p>
+                <p class="item-desc">Created an end-to-end dashboard to visualize retail sales trends, improving data accessibility for stakeholders.</p>
+            </div>
+            <hr style="opacity: 0.1; margin: 20px 0;">
+            <div class="item-info">
+                <p class="item-title">Exploratory Data Analysis (EDA)</p>
+                <p class="item-sub">Python (Pandas/Seaborn)</p>
+                <p class="item-desc">Analyzed large datasets to identify correlations and patterns in consumer behavior using statistical modeling.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="education" class="section">
+        <h2>Education & Certifications</h2>
+        <div class="glass-card">
+            <div class="item-info" style="margin-bottom: 30px;">
+                <p class="item-sub">University Education</p>
+                <p class="item-title">JNTUH University College of Engineering Manthani</p>
+                <p class="item-desc">B.Tech in Computer Science and Engineering | <strong>3rd Year</strong></p>
+            </div>
+            <div class="item-info">
+                <p class="item-sub">Professional Credentials</p>
+                <p class="item-title">Certified Data Analyst</p>
+                <p class="item-desc">Comprehensive course completion focusing on SQL, Python, and BI Tools.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="achievements" class="section">
+        <h2>Achievements</h2>
+        <div class="glass-card">
+            <p class="item-desc">🏆 Consistently maintaining strong academic standing in CSE Department.</p>
+            <p class="item-desc" style="margin-top: 10px;">🌟 Successfully built and deployed multiple data visualization models.</p>
+            <p class="item-desc" style="margin-top: 10px;">💡 Active participant in university-level technical symposiums.</p>
+        </div>
+    </section>
+
+    <section id="contact" class="section">
+        <h2>Contact Me</h2>
+        <div class="contact-grid">
+            <div class="contact-card">
+                <i class="fa-solid fa-location-dot"></i>
+                <h4>Location</h4>
+                <p>Narasaraopet, AP</p>
+            </div>
+
+            <a href="mailto:shaikgouse90638@gmail.com" class="contact-card">
+                <i class="fa-solid fa-envelope"></i>
+                <h4>Email</h4>
+                <p>shaikgouse90638@gmail.com</p>
+            </a>
+
+            <a href="https://www.linkedin.com/in/shaik-gouse-khaja-879a2a32a?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app" target="_blank" class="contact-card">
+                <i class="fa-brands fa-linkedin-in"></i>
+                <h4>LinkedIn</h4>
+                <p>Let's Network</p>
+            </a>
+
+            <a href="tel:9381457690" class="contact-card">
+                <i class="fa-solid fa-phone"></i>
+                <h4>Mobile</h4>
+                <p>+91 93814 57690</p>
+            </a>
+        </div>
+    </section>
+
+
+
+    <script>
+        const textElement = document.getElementById("typing-text");
+        const nameStr = "Shaik Gouse Khaja";
+        let idx = 0;
+        function type() {
+            if (idx < nameStr.length) {
+                textElement.innerHTML += nameStr.charAt(idx);
+                idx++;
+                setTimeout(type, 120);
+            }
+        }
+        window.onload = type;
+
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        window.addEventListener('mousemove', (e) => {
+            for(let i=0; i<3; i++) particles.push(new Particle(e.x, e.y));
+        });
+
+        class Particle {
+            constructor(x, y) {
+                this.x = x; this.y = y;
+                this.size = Math.random() * 3 + 1;
+                this.speedX = (Math.random() - 0.5) * 2;
+                this.speedY = (Math.random() - 0.5) * 2;
+            }
+            update() {
+                this.x += this.speedX; this.y += this.speedY;
+                if (this.size > 0.1) this.size -= 0.05;
+            }
+            draw() {
+                ctx.fillStyle = '#10b981';
+                ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI*2); ctx.fill();
+            }
+        }
+
+        function animate() {
+            ctx.clearRect(0,0,canvas.width, canvas.height);
+            particles.forEach((p, i) => {
+                p.update(); p.draw();
+                if(p.size <= 0.2) particles.splice(i, 1);
+            });
+            requestAnimationFrame(animate);
+        }
+        animate();
+    </script>
+</body>
+</html>
